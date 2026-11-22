@@ -1,0 +1,135 @@
+@import '../../../theme/variables.less';
+
+.focus-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: @gap-xl;
+  animation: fade-in 0.4s @ease;
+
+  &.focus {
+    background: radial-gradient(ellipse at center, #0F1E18 0%, #0A120E 100%);
+  }
+  &.break {
+    // 不透明的暗琥珀背景,保证全屏遮罩完全遮住底层界面
+    background: radial-gradient(ellipse at center, #241806 0%, #100B02 100%);
+  }
+
+  .exit-btn {
+    position: absolute;
+    top: @gap-lg;
+    right: @gap-lg;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(19, 26, 38, 0.6);
+    color: @muted;
+    display: grid;
+    place-items: center;
+    transition: all @dur-fast @ease;
+
+    &:hover {
+      background: rgba(19, 26, 38, 0.9);
+      color: @text;
+      transform: rotate(90deg);
+    }
+  }
+
+  .overlay-slogan {
+    font-size: @fs-lg;
+    color: @muted;
+    letter-spacing: 4px;
+    opacity: 0.7;
+  }
+
+  .overlay-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: @gap-sm;
+
+    .overlay-time {
+      font-size: 120px;
+      font-weight: 200;
+      color: @text;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 4px;
+      animation: breathe 3s ease-in-out infinite;
+    }
+
+    .overlay-mode {
+      font-size: @fs-xl;
+      color: @accent;
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+
+    .overlay-plan {
+      font-size: @fs-md;
+      color: @muted;
+      margin-top: @gap-xs;
+    }
+  }
+
+  .break .overlay-mode {
+    color: @warning;
+  }
+
+  .overlay-progress-bar {
+    width: min(500px, 60vw);
+    height: 4px;
+    background: rgba(34, 197, 94, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+
+    .bar-fill {
+      height: 100%;
+      background: @accent;
+      border-radius: 999px;
+      transition: width 0.9s linear;
+    }
+  }
+
+  .break .bar-fill {
+    background: @warning;
+  }
+
+  .overlay-ctrl {
+    .btn-grad;
+    gap: @gap-sm;
+    padding: 14px 40px;
+    border-radius: 999px;
+    font-size: @fs-md;
+
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+
+  .break .overlay-ctrl {
+    .btn-grad-warn;
+  }
+
+  .overlay-hint {
+    position: absolute;
+    bottom: @gap-lg;
+    font-size: @fs-xs;
+    color: @muted;
+    opacity: 0.5;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.75; }
+}

@@ -1,0 +1,120 @@
+@import './variables.less';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: @bg;
+  color: @text;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI',
+    Helvetica, Arial, sans-serif;
+  font-size: @fs-md;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  overflow: hidden;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+a {
+  color: @accent;
+  text-decoration: none;
+}
+
+input,
+textarea {
+  font-family: inherit;
+  color: @text;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.3);
+  color: @white;
+}
+
+// 滚动条（深色）
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.22);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.4);
+}
+
+// —— 通用工具类 ——
+.card {
+  .glass-card;
+  box-shadow: @shadow-sm;
+  padding: @gap-lg;
+}
+
+.surface-card {
+  .glass-card;
+  padding: @gap-lg;
+}
+
+.muted {
+  color: @muted;
+}
+
+// hover 轻微抬起 + 辉光
+.lift {
+  transition: transform @dur @ease, box-shadow @dur @ease, border-color @dur @ease;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: @shadow-md, @glow-primary;
+    border-color: rgba(52, 211, 153, 0.35);
+  }
+  &:active {
+    transform: translateY(0) scale(0.99);
+  }
+}
+
+// 通用按钮按压微动效
+button:not(:disabled) {
+  transition: transform @dur-fast @ease;
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+// —— 弹窗通用样式（定义见 variables.less，供各模块 mixin 复用） ——
+
+// 清新脉冲（打卡）
+@keyframes pulse-warm {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(52, 211, 153, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+  }
+}
+.pulse-warm {
+  animation: pulse-warm 0.7s @ease;
+}

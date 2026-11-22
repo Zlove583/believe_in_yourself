@@ -1,0 +1,187 @@
+// 现代深色科技风主题（Linear / Arc 风格）
+// 深色底 + 玻璃拟态卡片 + 霓虹绿青渐变点缀
+@bg: #0A0E14;
+@bg-2: #0D1220;       // 渐变第二色（略带蓝调）
+@surface: #131A26;
+@surface-glass: rgba(19, 26, 38, 0.72);
+@primary: #34D399;
+@accent: #22D3EE;
+@accent-2: #34D399;   // 渐变第二色（霓虹绿）
+@success: #34D399;
+@warning: #FBBF24;    // 琥珀（休息态 / 警告）
+@text: #E6EDF3;
+@muted: #8B98A9;
+
+// 衍生
+@field-bg: rgba(148, 163, 184, 0.06);        // 输入框/列表项普通底（柔和抬升层）
+@field-bg-hover: rgba(52, 211, 153, 0.1);    // 列表项悬浮底（绿调微光）
+@primary-soft: rgba(52, 211, 153, 0.14);
+@accent-soft: rgba(34, 211, 238, 0.14);
+@success-soft: rgba(52, 211, 153, 0.2);
+@border: rgba(148, 163, 184, 0.14);
+@white: #FFFFFF;
+
+// 品牌渐变（绿→青，多处复用）
+@sunset-grad: linear-gradient(135deg, #34D399 0%, #22D3EE 100%);
+@sunset-grad-soft: linear-gradient(135deg, rgba(52, 211, 153, 0.12) 0%, rgba(34, 211, 238, 0.12) 100%);
+
+// 侧边栏（深色玻璃质感）
+@sidebar-bg: linear-gradient(180deg, #0C111B 0%, #0A0F18 100%);
+@sidebar-text: #9AA7B8;
+@sidebar-text-strong: #F1F5F9;
+@sidebar-text-muted: #64748B;
+@sidebar-hover-bg: rgba(148, 163, 184, 0.08);
+@sidebar-active-bg: rgba(52, 211, 153, 0.12);
+@sidebar-active-text: #34D399;
+@sidebar-border: rgba(148, 163, 184, 0.1);
+
+// 圆角
+@radius-sm: 8px;
+@radius-md: 12px;
+@radius-lg: 16px;
+@radius-xl: 24px;
+
+// 阴影（深色投影 + 主色辉光）
+@shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.3);
+@shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+@shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.5);
+@glow-primary: 0 0 24px rgba(52, 211, 153, 0.18);
+@glow-accent: 0 0 24px rgba(34, 211, 238, 0.18);
+
+// 间距
+@gap-xs: 4px;
+@gap-sm: 8px;
+@gap-md: 16px;
+@gap-lg: 24px;
+@gap-xl: 32px;
+
+// 字号
+@fs-xs: 12px;
+@fs-sm: 13px;
+@fs-md: 15px;
+@fs-lg: 18px;
+@fs-xl: 24px;
+@fs-xxl: 32px;
+
+// 动效
+@ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+@dur-fast: 0.16s;
+@dur: 0.26s;
+
+// 卡片拟态渐变背景（比背景明显抬升,边界清晰）
+@card-bg-grad: linear-gradient(160deg, rgba(32, 44, 60, 0.92) 0%, rgba(19, 26, 38, 0.96) 100%);
+
+// 玻璃拟态卡片 mixin
+.glass-card {
+  background: @card-bg-grad;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: @radius-lg;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05); // 顶部内高光,拟态立体感
+}
+
+// —— 全局统一按钮体系(渐变主按钮 + 情景渐变 + 幽灵按钮) ——
+.btn-grad-base() {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: @radius-md;
+  font-weight: 700;
+  color: #06120D;
+  transition: all @dur-fast @ease;
+  &:hover:not(:disabled) {
+    box-shadow: @glow-primary;
+  }
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+// 主操作:绿→青渐变(参照英语打卡"进入复习"按钮)
+.btn-grad() {
+  .btn-grad-base;
+  background: @sunset-grad;
+}
+
+// 危险操作:红粉渐变
+.btn-grad-danger() {
+  .btn-grad-base;
+  background: linear-gradient(135deg, #F87171 0%, #FB7185 100%);
+  color: #22060A;
+  &:hover:not(:disabled) { box-shadow: 0 0 20px rgba(248, 113, 113, 0.35); }
+}
+
+// 警示/休息操作:琥珀渐变
+.btn-grad-warn() {
+  .btn-grad-base;
+  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+  color: #201403;
+  &:hover:not(:disabled) { box-shadow: 0 0 20px rgba(251, 191, 36, 0.35); }
+}
+
+// 次要操作:幽灵按钮(描边)
+.btn-ghost() {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: @radius-md;
+  border: 1px solid @border;
+  color: @muted;
+  font-weight: 600;
+  transition: all @dur-fast @ease;
+  &:hover:not(:disabled) {
+    color: @text;
+    border-color: @primary;
+  }
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+// 弹窗遮罩 mixin：深色 + 背景模糊，突出弹窗边界
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(3, 7, 12, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  animation: dialog-fade 0.2s @ease;
+}
+
+// 弹窗面板 mixin：实底渐变 + 描边 + 大阴影
+.dialog-panel {
+  background: linear-gradient(160deg, #172130 0%, #121926 100%);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: @radius-lg;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(52, 211, 153, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  animation: dialog-pop 0.25s @ease;
+}
+
+@keyframes dialog-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes dialog-pop {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

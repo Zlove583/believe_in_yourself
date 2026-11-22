@@ -1,0 +1,390 @@
+@import '../../../theme/variables.less';
+
+.eng-overlay {
+  .dialog-overlay;
+}
+
+.eng-dialog {
+  .dialog-panel;
+  width: min(560px, 92vw);
+  max-height: 88vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; // 头部/底部固定,仅中间滚动
+
+  /* —— 头部(固定) —— */
+  .eng-header {
+    display: flex;
+    align-items: center;
+    gap: @gap-sm;
+    color: @primary;
+    padding: @gap-md @gap-lg;
+    border-bottom: 1px solid @border;
+    flex-shrink: 0;
+
+    h3 {
+      font-size: @fs-lg;
+      color: @text;
+      flex: 1;
+    }
+    .close-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      color: @muted;
+      display: grid;
+      place-items: center;
+      &:hover { background: @field-bg-hover; color: @text; }
+    }
+  }
+
+  /* 步骤指示(固定,属头部区域) */
+  .eng-steps {
+    display: flex;
+    gap: @gap-sm;
+    padding: @gap-sm @gap-lg;
+    background: rgba(148, 163, 184, 0.04);
+    border-bottom: 1px solid @border;
+    flex-shrink: 0;
+
+    .step {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: @radius-sm;
+      background: @field-bg;
+      color: @muted;
+      font-size: @fs-xs;
+      transition: all @dur @ease;
+
+      .step-dot {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: @border;
+        color: @text;
+        font-size: 10px;
+        font-weight: 700;
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+      }
+
+      &.current {
+        background: @primary-soft;
+        color: @primary;
+        .step-dot { background: @primary; color: #06120D; }
+      }
+      &.past {
+        color: @success;
+        .step-dot { background: @success; color: #06120D; }
+      }
+    }
+  }
+
+  /* —— 中间内容(唯一可滚动) —— */
+  .eng-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: @gap-lg;
+  }
+
+  .eng-body {
+    display: flex;
+    flex-direction: column;
+    gap: @gap-md;
+
+    .eng-tip {
+      font-size: @fs-sm;
+    }
+  }
+
+  /* —— 录词行 —— */
+  .word-rows {
+    display: flex;
+    flex-direction: column;
+    gap: @gap-sm;
+  }
+
+  .word-row {
+    display: flex;
+    align-items: center;
+    gap: @gap-sm;
+    padding: 8px 12px;
+    border-radius: @radius-md;
+    background: @field-bg;
+    border: 1px solid @border;
+    transition: all @dur-fast @ease;
+
+    &.ok { border-color: rgba(52, 211, 153, 0.4); }
+    &.manual { border-color: rgba(251, 191, 36, 0.4); }
+    &.loading { border-color: rgba(34, 211, 238, 0.5); }
+
+    .row-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: @border;
+      color: @text;
+      font-size: 11px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .word-input {
+      width: 150px;
+      padding: 6px 10px;
+      border: none;
+      border-bottom: 1.5px solid @border;
+      background: transparent;
+      font-size: @fs-md;
+      color: @text;
+      outline: none;
+      transition: border-color @dur-fast @ease;
+
+      &:focus { border-color: @accent; }
+    }
+
+    .row-loading {
+      color: @accent;
+      animation: spin 1s linear infinite;
+    }
+
+    .row-meaning {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      font-size: @fs-xs;
+
+      .phonetic { color: @accent; }
+      .meaning {
+        color: @muted;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+
+    .meaning-input {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1px dashed rgba(251, 191, 36, 0.5);
+      border-radius: @radius-sm;
+      background: transparent;
+      font-size: @fs-sm;
+      color: @text;
+      outline: none;
+      &:focus { border-style: solid; }
+    }
+  }
+
+  /* —— 复习卡 —— */
+  .review-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: @gap-md;
+    padding: @gap-xl @gap-lg;
+    border-radius: @radius-lg;
+    background:
+      radial-gradient(300px 180px at 50% 0%, rgba(52, 211, 153, 0.08), transparent 70%),
+      @field-bg;
+    border: 1px solid @border;
+
+    .review-progress {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: @gap-sm;
+      font-size: @fs-xs;
+      color: @muted;
+      font-variant-numeric: tabular-nums;
+
+      .progress-track {
+        flex: 1;
+        height: 4px;
+        border-radius: 999px;
+        background: @border;
+        overflow: hidden;
+
+        .progress-fill {
+          height: 100%;
+          background: @sunset-grad;
+          transition: width 0.4s @ease;
+        }
+      }
+    }
+
+    .review-icon { color: @primary; }
+
+    .review-meaning {
+      font-size: @fs-lg;
+      color: @text;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.5;
+      max-width: 90%;
+    }
+
+    .review-input {
+      width: 100%;
+      padding: 10px 16px;
+      border: 1.5px solid @border;
+      border-radius: @radius-md;
+      background: @surface;
+      font-size: @fs-xl;
+      text-align: center;
+      letter-spacing: 2px;
+      color: @text;
+      outline: none;
+      transition: border-color @dur-fast @ease;
+      &:focus { border-color: @accent; }
+    }
+
+    .review-result {
+      font-size: @fs-sm;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      animation: result-pop 0.3s @ease;
+
+      &.correct { color: @success; }
+      &.wrong { color: #F87171; }
+
+      // 继承全局 .speak-btn,略小一号
+      .speak-btn { width: 24px; height: 24px; }
+    }
+  }
+
+  /* —— 完成页 —— */
+  .done-body {
+    align-items: center;
+    text-align: center;
+
+    .done-icon {
+      color: @warning;
+      animation: result-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    h4 { font-size: @fs-xl; color: @text; }
+
+    .done-stats {
+      display: flex;
+      gap: @gap-xl;
+
+      .done-stat {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .num {
+          font-size: @fs-xxl;
+          font-weight: 700;
+          background: @sunset-grad;
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .label { font-size: @fs-xs; color: @muted; }
+      }
+    }
+  }
+
+  /* —— 底部操作(固定) —— */
+  .eng-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: @gap-md @gap-lg;
+    border-top: 1px solid @border;
+    background: rgba(148, 163, 184, 0.04);
+    flex-shrink: 0;
+
+    &.center { justify-content: center; gap: @gap-md; }
+
+    .progress-text { font-size: @fs-xs; }
+
+    .primary-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 22px;
+      border-radius: @radius-md;
+      background: @sunset-grad;
+      color: #06120D;
+      font-size: @fs-sm;
+      font-weight: 700;
+      transition: all @dur-fast @ease;
+      &:hover:not(:disabled) { box-shadow: @glow-primary; }
+      &:disabled { opacity: 0.4; cursor: not-allowed; }
+      .spinning { animation: spin 1s linear infinite; }
+    }
+
+    .ghost-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      border-radius: @radius-md;
+      border: 1px solid @border;
+      color: @muted;
+      font-size: @fs-sm;
+      &:hover:not(:disabled) { color: @text; border-color: @primary; }
+      &:disabled { opacity: 0.4; cursor: not-allowed; }
+    }
+  }
+
+  /* —— 发音按钮播放状态 —— */
+  .speak-btn {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    color: @accent;
+    background: @accent-soft;
+    border: 1px solid rgba(34, 211, 238, 0.25);
+    display: grid;
+    place-items: center;
+    transition: all @dur-fast @ease;
+    &:hover {
+      color: @text;
+      box-shadow: 0 0 10px rgba(34, 211, 238, 0.35);
+      transform: scale(1.1);
+    }
+
+    &.playing {
+      color: @text;
+      border-color: @accent;
+      animation: speak-pulse 1s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes speak-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(34, 211, 238, 0);
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes result-pop {
+  0% { opacity: 0; transform: scale(0.85); }
+  100% { opacity: 1; transform: scale(1); }
+}

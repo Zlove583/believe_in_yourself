@@ -1,0 +1,152 @@
+@import '../../../theme/variables.less';
+
+.quick-checkin {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: @gap-md;
+}
+
+.plan-card {
+  .glass-card;   // 与全局卡片一致的拟态渐变背景
+  padding: @gap-md;
+  display: flex;
+  flex-direction: column;
+  gap: @gap-sm;
+  position: relative;
+
+  &.done {
+    background:
+      linear-gradient(120deg, rgba(52, 211, 153, 0.1), rgba(34, 211, 238, 0.08)),
+      @card-bg-grad;
+    border-color: rgba(52, 211, 153, 0.45);
+  }
+
+  .plan-head {
+    display: flex;
+    align-items: center;
+    gap: @gap-sm;
+  }
+
+  .plan-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: @radius-md;
+    background: @primary-soft;
+    color: @primary;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+
+  &.done .plan-icon {
+    background: @success-soft;
+    color: @success;
+  }
+
+  .plan-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    strong {
+      font-size: @fs-md;
+      color: @text;
+    }
+    small {
+      font-size: @fs-xs;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .plan-stats {
+    display: flex;
+    gap: @gap-xs;
+    flex-wrap: wrap;
+  }
+
+  .stat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: @fs-xs;
+
+    &.streak {
+      background: @primary-soft;
+      color: @accent;
+    }
+    &.metric {
+      background: @warning;
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+
+  .check-btn {
+    .btn-grad;
+    margin-top: auto;
+    padding: 9px;
+    font-size: @fs-sm;
+    font-weight: 700;
+
+    &.checked {
+      background: linear-gradient(135deg, #34D399 0%, #A3E635 100%);
+    }
+  }
+
+  .undo-btn {
+    position: absolute;
+    top: @gap-md;
+    right: @gap-md;
+    font-size: @fs-xs;
+    color: @muted;
+    text-decoration: underline;
+    opacity: 0;
+    transition: opacity @dur-fast @ease;
+  }
+
+  &:hover .undo-btn {
+    opacity: 1;
+  }
+
+  .num-input {
+    display: flex;
+    gap: @gap-xs;
+    align-items: center;
+    margin-top: auto;
+
+    input {
+      flex: 1;
+      padding: 7px 10px;
+      border: 1.5px solid @border;
+      border-radius: @radius-sm;
+      font-size: @fs-sm;
+      outline: none;
+      background: @field-bg;
+      &:focus {
+        border-color: @accent;
+      }
+    }
+
+    .confirm-btn {
+      .btn-grad;
+      width: 30px;
+      height: 30px;
+      border-radius: @radius-sm;
+      display: grid;
+      place-items: center;
+    }
+    .cancel-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: @radius-sm;
+      background: @field-bg-hover;
+      color: @muted;
+      display: grid;
+      place-items: center;
+    }
+  }
+}
